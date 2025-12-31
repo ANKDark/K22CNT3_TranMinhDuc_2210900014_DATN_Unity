@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9596cf03ecc54d4e95218cc01d8cb95, type: 3}
+  m_Name: Head Armor Type 1 Color 1
+  m_EditorClassIdentifier: 
+  uiDisplay: {fileID: 21300000, guid: 26f5264360368854eae1764927bf8ce5, type: 3}
+  characterDisplay: {fileID: 4506212837237186832, guid: c58a0f3d265344c438e99a7d3139dd17, type: 3}
+  stackable: 0
+  worldModel: {fileID: 4506212837237186832, guid: c58a0f3d265344c438e99a7d3139dd17, type: 3}
+  boneNames: []
+  type: 4
+  description: 
+  data:
+    name: 
+    Id: 4
+    buffs:
+    - attribute: 2
+      value: 0
+      min: 1
+      max: 100
+    - attribute: 1
+      value: 0
+      min: 1
+      max: 20

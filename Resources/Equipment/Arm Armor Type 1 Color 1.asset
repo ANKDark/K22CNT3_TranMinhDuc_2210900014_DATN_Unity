@@ -12,19 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9596cf03ecc54d4e95218cc01d8cb95, type: 3}
   m_Name: Arm Armor Type 1 Color 1
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: 92bc953d2ce8f374cbdded612d89641b, type: 3}
+  uiDisplay: {fileID: 21300000, guid: 64eccccf6b1278f46806188ade6dbd5b, type: 3}
   characterDisplay: {fileID: 3414250274570114833, guid: b8803a039141fdd489fc78c854ca251f, type: 3}
-  stackable: 1
+  stackable: 0
   worldModel: {fileID: 3414250274570114833, guid: b8803a039141fdd489fc78c854ca251f, type: 3}
   boneNames: []
   type: 0
-  description: 
   data:
-    name: 
-    Id: 7
+    name: "G\u0103ng Tay Canh Gi\u1EEF 1"
+    Id: 0
     buffs:
     - attribute: 0
       value: 0
-      min: 1
+      min: 2
       max: 5
-    description: 
+    - attribute: 1
+      value: 0
+      min: 1
+      max: 3
+    description: "G\u0103ng tay nhu\u1ED1m h\u1EAFc kh\xED, t\u1EEBng n\u1EAFm ch\u1EB7t
+      chu\xF4i ki\u1EBFm su\u1ED1t h\xE0ng tr\u0103m n\u0103m.\nNg\xF3n tay \u0111\xE3
+      c\u1EE9ng l\u1EA1i, nh\u01B0ng l\u1EDDi th\u1EC1 th\xEC ch\u01B0a t\u1EEBng
+      bu\xF4ng."

@@ -5,6 +5,7 @@ public abstract class EnemyBase : MonoBehaviour
 {
     [Header("Combat Settings")]
     public float damage = 10f;
+    public float def = 10f;
     public float attackCooldown = 2f;
     public float chaseRange = 10f;
     public float maxChaseRange = 20f;
@@ -27,6 +28,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = attackRange;
         anim = GetComponent<Animator>();
         patrolScript = GetComponent<EnemyPatrol>();
         startPosition = transform.position;
@@ -123,11 +125,15 @@ public abstract class EnemyBase : MonoBehaviour
             {
                 if (isTooFarFromHome)
                 {
+                    if (agent.isStopped) agent.isStopped = false; 
+                    
                     patrolScript.ReturnToStart();
                     if (anim != null) anim.SetFloat("Speed", agent.velocity.magnitude);
                 }
                 else
                 {
+                     if (agent.isStopped) agent.isStopped = false;
+
                     patrolScript.DoPatrolLogic();
                     if (anim != null) anim.SetFloat("Speed", agent.velocity.magnitude);
                 }

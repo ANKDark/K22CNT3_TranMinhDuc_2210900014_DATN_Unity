@@ -12,23 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9596cf03ecc54d4e95218cc01d8cb95, type: 3}
   m_Name: Sword1_FBX
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: b906fea0feef57a4ab4ae21578cc1c5a, type: 3}
-  characterDisplay: {fileID: 0}
+  uiDisplay: {fileID: 21300000, guid: 2e23faa632c0e874eb4949ba4dfc3fc1, type: 3}
+  characterDisplay: {fileID: 919132149155446097, guid: 1af6c9d4792b975498541f34267aefc6, type: 3}
   stackable: 0
   worldModel: {fileID: 919132149155446097, guid: 1af6c9d4792b975498541f34267aefc6, type: 3}
   boneNames: []
   type: 6
-  description: 
   data:
-    name: 
-    Id: 6
+    name: "Thanh Ki\u1EBFm Ng\u01B0\u1EDDi Canh Gi\u1EEF"
+    Id: 18
     buffs:
     - attribute: 0
       value: 0
-      min: 1
-      max: 100
+      min: 5
+      max: 20
     - attribute: 1
       value: 0
       min: 1
-      max: 50
-    worldModel: {fileID: 0}
+      max: 15
+    description: "L\u01B0\u1EE1i ki\u1EBFm kh\xF4ng ph\u1EA3n chi\u1EBFu \xE1nh s\xE1ng.\nN\xF3
+      kh\xF4ng \u0111\u01B0\u1EE3c r\xE8n \u0111\u1EC3 ch\xE9m k\u1EBB th\xF9, m\xE0
+      \u0111\u1EC3 ng\u0103n th\u1EBF gi\u1EDBi s\u1EE5p \u0111\u1ED5."

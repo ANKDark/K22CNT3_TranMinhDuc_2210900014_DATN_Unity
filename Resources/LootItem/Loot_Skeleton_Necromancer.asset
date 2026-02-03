@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc643070333672f4186b577c65b177e2, type: 3}
+  m_Name: Loot_Skeleton_Necromancer
+  m_EditorClassIdentifier: Assembly-CSharp::LootTable
+  lootItems:
+  - item: {fileID: 11400000, guid: 435b3ac641439aa48a09648c817c2f15, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 684c51f319f1cc04688b857fe36b9211, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 08f66cdf9ee78104285717dd471ca3a5, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 0580f3d124dec0048a2acabe927bed48, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: a1d84402fe9e8d646bff442bff7d8352, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 9bae4556382429040a1123ad7bd629d7, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: c094a247a0929c543b46627b245deb1c, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 868b4efda19ba2a44940d663966a5e5c, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 5638268a7776be94b85c938406c434a8, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 4a5b9206cf0af09459072aefb3a31791, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 7da3d1b2c8d2bb34ea2909af14770fc3, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 7da3d1b2c8d2bb34ea2909af14770fc3, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: fd528ff51eef0d741ae2615088638c65, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: ed00011bc10b39f46a61cb9fc3faaeec, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 5d1a64109fa625940b7a14fe4a5bb492, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 930a3564373559b4287b3241b189b0a1, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: da62d36e16aa087488cebd075ad64fc1, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: da62d36e16aa087488cebd075ad64fc1, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: da62d36e16aa087488cebd075ad64fc1, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: 244850d3e22f5364982eee40eb930003, type: 2}
+    dropChance: 4.5
+  - item: {fileID: 11400000, guid: bf442136020a4644ba0a61fadc1d6310, type: 2}
+    dropChance: 4.5

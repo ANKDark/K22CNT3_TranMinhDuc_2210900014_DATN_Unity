@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9596cf03ecc54d4e95218cc01d8cb95, type: 3}
+  m_Name: Belt Armor Type 1 Color 3
+  m_EditorClassIdentifier: 
+  uiDisplay: {fileID: 21300000, guid: c15af53840452494a89df1d427343a35, type: 3}
+  characterDisplay: {fileID: 4481408843846863276, guid: 668a1904c6dbbca40a1c0b6a46a2668c, type: 3}
+  stackable: 0
+  worldModel: {fileID: 4481408843846863276, guid: 668a1904c6dbbca40a1c0b6a46a2668c, type: 3}
+  boneNames: []
+  type: 1
+  data:
+    name: "Th\u1EAFt L\u01B0ng Canh Gi\u1EEF 3"
+    Id: 13
+    buffs:
+    - attribute: 3
+      value: 0
+      min: 12
+      max: 15
+    - attribute: 0
+      value: 0
+      min: 6
+      max: 9
+    description: "Th\u1EAFt l\u01B0ng kh\xF3a b\u1EB1ng \u1EA5n ch\xFA thay cho kim
+      lo\u1EA1i.\nKhi n\xF3 c\xF2n si\u1EBFt ch\u1EB7t, k\u1EBB canh gi\u1EEF v\u1EABn
+      ch\u01B0a \u0111\u01B0\u1EE3c ph\xE9p ng\xE3 xu\u1ED1ng."

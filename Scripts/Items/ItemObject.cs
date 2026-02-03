@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 
 public enum ItemType
 {
@@ -20,8 +21,8 @@ public enum ItemType
 public enum Attributes
 {
     Strength,
-    Agility,
-    Intellect,
+    Critical,
+    Defense,
     Stamina,
     Health,
     Mana
@@ -38,8 +39,6 @@ public class ItemObject : ScriptableObject
     public List<string> boneNames = new List<string>();
     public ItemType type;
 
-    [TextArea(15, 20)]
-    public string description;
 
     public Item data = new Item();
 
@@ -56,13 +55,16 @@ public static class ItemExtensions
         if (item.buffs == null || item.buffs.Length == 0)
             return "Không có chỉ số";
 
-        List<string> buffStrings = new List<string>();
+        StringBuilder sb = new StringBuilder();
         foreach (var buff in item.buffs)
         {
-            string sign = buff.value >= 0 ? "+ " : "";
-            buffStrings.Add($"{sign}{buff.value} {buff.attribute}");
+            sb.Append(buff.value >= 0 ? "+ " : "")
+              .Append(buff.value)
+              .Append(" ")
+              .Append(buff.attribute)
+              .AppendLine();
         }
-        return string.Join("\n", buffStrings);
+        return sb.ToString();
 
     }
 }
@@ -73,6 +75,7 @@ public class Item
     public string name;
     public int Id = -1;
     public ItemBuff[] buffs;
+    [TextArea(15, 20)]
     public string description;
     [System.NonSerialized] public GameObject worldModel;
 
@@ -86,8 +89,8 @@ public class Item
 
     public Item(ItemObject item)
     {
-        name = item.name;
-        description = item.description;
+        name = item.data.name;
+        description = item.data.description;
         Id = item.data.Id != -1 ? item.data.Id : UnityEngine.Random.Range(1000, 9999);
         worldModel = item.worldModel;
 

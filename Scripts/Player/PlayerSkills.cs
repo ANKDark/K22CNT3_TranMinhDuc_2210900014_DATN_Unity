@@ -73,7 +73,8 @@ public class PlayerSkills : MonoBehaviour
 
         if (playerStats != null && playerStats.isPlayerDead)
             return;
-        if (UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject() || playerStats.currentHealth <= 0) return;
+        if (UnityEngine.EventSystems.EventSystem.current != null && UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
+        if (playerStats == null || playerStats.currentHealth <= 0) return;
 
         if (playerStats.isHurting) return;
 
@@ -225,6 +226,9 @@ public class PlayerSkills : MonoBehaviour
 
         if (playerStats.isHurting || playerStats.isPlayerDead) yield break;
 
+        if (skillRData.sfxSound != null && audioSource != null)
+            audioSource.PlayOneShot(skillRData.sfxSound);
+
         if (skillRData.vfxPrefab != null)
         {
             Vector3 spawnPos = transform.position + Vector3.up * 0f;
@@ -279,9 +283,15 @@ public class PlayerSkills : MonoBehaviour
                 }
             }
             Destroy(vfxBuffObj);
+            // Moved SFX play to top of block
         }
-        if (skillRData.sfxSound != null && audioSource != null)
-            audioSource.PlayOneShot(skillRData.sfxSound);
+        else
+        {
+             // Fallback if no VFX but sound exists, ensure it plays if not handled above
+             // Actually, to be safe and avoid double playing if VFX exists, the logic above covers both?
+             // No, the original logic had SFX outside the VFX block.
+             // Improved logic: Pull SFX out completely independent of VFX.
+        }
     }
 
     private void OnDestroy()

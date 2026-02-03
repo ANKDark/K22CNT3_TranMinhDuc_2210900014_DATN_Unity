@@ -15,7 +15,7 @@ public class ItemPickUp : MonoBehaviour
     {
         itemTypeText.text = item.type.ToString();
         itemNameText.text = item.name;
-        itemDescriptionText.text = item.description;
+        itemDescriptionText.text = item.data.description;
         if(item.uiDisplay != null)
         {
             itemImage.sprite = item.uiDisplay;

@@ -1518,6 +1518,7 @@ GameObject:
   - component: {fileID: 2606951263610821067}
   - component: {fileID: 8886668078823343687}
   - component: {fileID: 8211362129549793453}
+  - component: {fileID: -867604595509475618}
   m_Layer: 0
   m_Name: Skeleton (1)
   m_TagString: Enemy
@@ -1602,12 +1603,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyPatrol
   usePatrolPoints: 0
-  moveSpeed: 2
+  moveSpeed: 3
   waitTime: 2
   wanderRange: 7
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []
 --- !u!136 &5234234243438471927
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1648,7 +1647,7 @@ MonoBehaviour:
   healthBarUI: {fileID: 0}
   vfxBloodHit: {fileID: 5648043616069701104, guid: e2ba5115b4b778947bda814e83b9dc0c, type: 3}
   isHurting: 0
-  vfxTeleportation: {fileID: 3377181292992421420, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
+  vfxTeleportation: {fileID: 0}
   lootTable: {fileID: 11400000, guid: bb457cf1e4285dd42a3ab60a66e5344b, type: 2}
 --- !u!195 &8886668078823343687
 NavMeshAgent:
@@ -1684,14 +1683,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32464d8c0aab92345bba47ea906f54d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  damage: 10
+  damage: 5
+  def: 10
   attackCooldown: 2
   chaseRange: 7
-  maxChaseRange: 20
+  maxChaseRange: 9
   attackRange: 2
   runSpeed: 4
   turnSpeed: 5
   target: {fileID: 0}
+--- !u!114 &-867604595509475618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6570420888955456152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef573ee4178ecd4f89c32f66658addd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UniqueID
+  uniqueId: 982e9238-61e1-4760-b835-aaf428a42cf4
 --- !u!1 &6928474447199306479
 GameObject:
   m_ObjectHideFlags: 0

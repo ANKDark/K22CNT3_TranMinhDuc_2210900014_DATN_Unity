@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9596cf03ecc54d4e95218cc01d8cb95, type: 3}
+  m_Name: Head Armor Type 1 Color 3
+  m_EditorClassIdentifier: 
+  uiDisplay: {fileID: 21300000, guid: fa709725529d0e44d91b4c117871eaed, type: 3}
+  characterDisplay: {fileID: 8258675891623699987, guid: 4007661dcf4b04b47ae1de0f1df76151, type: 3}
+  stackable: 0
+  worldModel: {fileID: 8258675891623699987, guid: 4007661dcf4b04b47ae1de0f1df76151, type: 3}
+  boneNames: []
+  type: 4
+  data:
+    name: "M\u0169 Canh Gi\u1EEF 3"
+    Id: 16
+    buffs:
+    - attribute: 2
+      value: 0
+      min: 9
+      max: 12
+    - attribute: 3
+      value: 0
+      min: 6
+      max: 10
+    description: "Chi\u1EBFc m\u0169 n\xE0y t\u1EEBng che \u0111i \xE1nh m\u1EAFt
+      c\u1EE7a m\u1ED9t hi\u1EC7p s\u0129 kh\xF4ng \u0111\u01B0\u1EE3c ph\xE9p r\u1EDDi
+      v\u1ECB tr\xED.\nB\xEAn trong v\u1EABn c\xF2n v\u1EBFt n\u1EE9t \u2013 n\u01A1i
+      h\u1EAFn \u0111\xE3 nh\xECn th\u1EA5y th\u1EE9 kh\xF4ng n\xEAn t\u1ED3n t\u1EA1i."

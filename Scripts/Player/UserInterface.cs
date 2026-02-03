@@ -3,8 +3,10 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.EventSystems;
 using UnityEngine.Events;
 using System;
+using UnityEngine.SceneManagement;
 
 public abstract class UserInterface : MonoBehaviour
 {
@@ -12,8 +14,26 @@ public abstract class UserInterface : MonoBehaviour
     public InventoryObject inventory;
     public Dictionary<GameObject, InventorySlot> slotOnInterface = new Dictionary<GameObject, InventorySlot>();
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        inventoryPlayer = FindFirstObjectByType<InventoryPlayer>();
+    }
+
     void Start()
     {
+        if (inventoryPlayer == null)
+            inventoryPlayer = FindFirstObjectByType<InventoryPlayer>();
+
         CreateSlots();
         for (int i = 0; i < inventory.container.Slots.Length; i++)
         {
@@ -26,26 +46,50 @@ public abstract class UserInterface : MonoBehaviour
         slotOnInterface.UpdateSlotDisplay();
     }
 
-    private void OnSlotUpdate(InventorySlot _slot)
+    protected void OnSlotUpdate(InventorySlot _slot)
     {
         if (_slot.slotDisplay == null)
         {
             return;
         }
-        var image = _slot.slotDisplay.transform.GetChild(0).GetComponent<Image>();
+
+        Image image = null;
+        Transform iconTransform = _slot.slotDisplay.transform.Find("Icon");
+        if (iconTransform != null)
+        {
+            image = iconTransform.GetComponent<Image>();
+        }
+        
+        // Fallback to first child if "Icon" not found
+        if (image == null && _slot.slotDisplay.transform.childCount > 0)
+        {
+            image = _slot.slotDisplay.transform.GetChild(0).GetComponent<Image>();
+        }
+
+        if (image == null) return;
+
         var textUI = _slot.slotDisplay.GetComponentInChildren<TextMeshProUGUI>();
 
         if (_slot.item != null && _slot.item.Id >= 0)
         {
             image.sprite = _slot.ItemObject.uiDisplay;
             image.color = new Color(1f, 1f, 1f, 1f);
-            textUI.text = _slot.amount == 1 ? "" : _slot.amount.ToString("n0");
+            if (textUI != null) textUI.text = _slot.amount == 1 ? "" : _slot.amount.ToString("n0");
         }
         else
         {
-            image.sprite = null;
-            image.color = new Color(1f, 1f, 1f, 0f);
-            textUI.text = "";
+            var placeholder = _slot.slotDisplay.GetComponent<SlotPlaceholder>();
+            if (placeholder != null && placeholder.placeholderSprite != null)
+            {
+                image.sprite = placeholder.placeholderSprite;
+                image.color = Color.white;
+            }
+            else
+            {
+                image.sprite = null;
+                image.color = new Color(1f, 1f, 1f, 0f);
+            }
+            if (textUI != null) textUI.text = "";
         }
     }
 
@@ -66,18 +110,31 @@ public abstract class UserInterface : MonoBehaviour
         MouseData.slotHoveredOver = obj;
         if (slotOnInterface[obj].item.Id >= 0)
         {
-            ItemTooltip.instance.Show(
-                slotOnInterface[obj].item.name ?? "Không có tên item",
-                slotOnInterface[obj].item.BuffsToString(),
-                slotOnInterface[obj].item.description ?? "Không có mô tả"
-            );
+            if (ItemTooltip.instance == null)
+            {
+                ItemTooltip.instance = FindFirstObjectByType<ItemTooltip>(FindObjectsInactive.Include);
+            }
+
+            if (ItemTooltip.instance != null)
+            {
+                ItemTooltip.instance.Show(
+                    slotOnInterface[obj].ItemObject.data.name ?? "Không có tên item",
+                    slotOnInterface[obj].item.BuffsToString(),
+                    slotOnInterface[obj].item.description ?? "Không có mô tả"
+                );
+            }
+            else
+            {
+                Debug.LogWarning("ItemTooltip.instance is NULL! Make sure the Tooltip object is in the Scene and Active.");
+            }
         }
     }
 
     public void OnExit(GameObject obj)
     {
         MouseData.slotHoveredOver = null;
-        ItemTooltip.instance.Hide();
+        if (ItemTooltip.instance != null)
+            ItemTooltip.instance.Hide();
     }
 
     public void OnExitInterface(GameObject obj)
@@ -135,6 +192,18 @@ public abstract class UserInterface : MonoBehaviour
         }
     }
 
+    public void OnPointerClick(GameObject obj, BaseEventData data)
+    {
+        PointerEventData pData = (PointerEventData)data;
+        if (pData.button == PointerEventData.InputButton.Right)
+        {
+            if (inventoryPlayer != null && slotOnInterface.ContainsKey(obj))
+            {
+                inventoryPlayer.UseItem(slotOnInterface[obj]);
+            }
+        }
+    }
+
     public static class MouseData
     {
         public static UserInterface interfaceMouseIsOver;
@@ -160,8 +229,17 @@ public static class ExtensionMethods
             }
             else
             {
-                image.sprite = null;
-                image.color = new Color(1f, 1f, 1f, 0f);
+                var placeholder = _slot.Key.GetComponent<SlotPlaceholder>();
+                if (placeholder != null && placeholder.placeholderSprite != null)
+                {
+                    image.sprite = placeholder.placeholderSprite;
+                    image.color = Color.white;
+                }
+                else
+                {
+                    image.sprite = null;
+                    image.color = new Color(1f, 1f, 1f, 0f);
+                }
                 textUI.text = "";
             }
         }

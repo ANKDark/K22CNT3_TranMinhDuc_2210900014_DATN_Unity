@@ -29,4 +29,20 @@ public static class SaveSystem
         if (File.Exists(path))
             File.Delete(path);
     }
+
+    public static void DeleteAllSaves()
+    {
+        DirectoryInfo di = new DirectoryInfo(Application.persistentDataPath);
+        if (!di.Exists) return;
+        FileInfo[] files = di.GetFiles();
+        foreach (FileInfo file in files)
+        {
+            file.Delete();
+        }
+        
+        if (File.Exists(path))
+            File.Delete(path);
+            
+        Debug.Log("Deleted all save items & chests.");
+    }
 }

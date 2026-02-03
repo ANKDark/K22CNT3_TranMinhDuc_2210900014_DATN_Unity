@@ -19656,7 +19656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948fd7948e54aba4cb427ab7b612aebe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PortalController
-  sceneName: Dungeon_B2
+  sceneName: IntroScene1
   textHint: {fileID: 4905051677729388256}
 --- !u!136 &484440837224857699
 CapsuleCollider:

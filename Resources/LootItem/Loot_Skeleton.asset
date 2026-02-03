@@ -14,11 +14,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LootTable
   lootItems:
   - item: {fileID: 11400000, guid: 435b3ac641439aa48a09648c817c2f15, type: 2}
-    dropChance: 100
-    overrideBuffs:
-    - attribute: 0
-      min: 5
-      max: 15
-    - attribute: 4
-      min: 10
-      max: 15
+    dropChance: 5
+  - item: {fileID: 11400000, guid: 684c51f319f1cc04688b857fe36b9211, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: 08f66cdf9ee78104285717dd471ca3a5, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: 0580f3d124dec0048a2acabe927bed48, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: a1d84402fe9e8d646bff442bff7d8352, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: 9bae4556382429040a1123ad7bd629d7, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: c094a247a0929c543b46627b245deb1c, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: 868b4efda19ba2a44940d663966a5e5c, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: 5638268a7776be94b85c938406c434a8, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: 4a5b9206cf0af09459072aefb3a31791, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: 7da3d1b2c8d2bb34ea2909af14770fc3, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: 7da3d1b2c8d2bb34ea2909af14770fc3, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: fd528ff51eef0d741ae2615088638c65, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: ed00011bc10b39f46a61cb9fc3faaeec, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: 5d1a64109fa625940b7a14fe4a5bb492, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: 930a3564373559b4287b3241b189b0a1, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: da62d36e16aa087488cebd075ad64fc1, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: da62d36e16aa087488cebd075ad64fc1, type: 2}
+    dropChance: 5
+  - item: {fileID: 11400000, guid: da62d36e16aa087488cebd075ad64fc1, type: 2}
+    dropChance: 5

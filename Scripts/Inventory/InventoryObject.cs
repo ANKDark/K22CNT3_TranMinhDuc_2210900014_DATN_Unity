@@ -125,24 +125,35 @@ public class InventoryObject : ScriptableObject
     public void Save()
     {
         IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Create, FileAccess.Write);
-        formatter.Serialize(stream, container);
-        stream.Close();
+        string path = string.Concat(Application.persistentDataPath, savePath);
+        using (Stream stream = new FileStream(path, FileMode.Create, FileAccess.Write))
+        {
+            formatter.Serialize(stream, container);
+        }
     }
 
     [ContextMenu("Load")]
     public void Load()
     {
-        if (File.Exists(string.Concat(Application.persistentDataPath, savePath)))
+        string path = string.Concat(Application.persistentDataPath, savePath);
+        if (File.Exists(path))
         {
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
-            Inventory newContainer = (Inventory)formatter.Deserialize(stream);
-            for (int i = 0; i < GetSlots.Length; i++)
+            using (Stream stream = new FileStream(path, FileMode.Open, FileAccess.Read))
             {
-                GetSlots[i].UpdateSlot(newContainer.Slots[i].item, newContainer.Slots[i].amount);
+                Inventory newContainer = (Inventory)formatter.Deserialize(stream);
+                for (int i = 0; i < GetSlots.Length; i++)
+                {
+                    if (i < newContainer.Slots.Length)
+                    {
+                        GetSlots[i].UpdateSlot(newContainer.Slots[i].item, newContainer.Slots[i].amount);
+                    }
+                    else
+                    {
+                        GetSlots[i].UpdateSlot(new Item(), 0); // Clear slot if save file doesn't have data for it
+                    }
+                }
             }
-            stream.Close();
         }
     }
     
@@ -158,6 +169,23 @@ public class InventoryObject : ScriptableObject
     public void Clear()
     {
         container.Clear();
+    }
+
+    public void InitializeBuffs()
+    {
+        foreach (var slot in GetSlots)
+        {
+            if (slot.item != null && slot.item.Id >= 0 && slot.item.buffs != null)
+            {
+                foreach (var buff in slot.item.buffs)
+                {
+                    if (buff.value == 0 && (buff.min != 0 || buff.max != 0))
+                    {
+                        buff.GenerateValue();
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -242,6 +270,7 @@ public class InventorySlot
             if (obj != null)
             {
                 item.worldModel = obj.worldModel;
+                item.name = obj.data.name;
             }
         }
 

@@ -14,12 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillName: "C\u1EAFm ki\u1EBFm"
   skillIcon: {fileID: 21300000, guid: 4322d2216bc4de048931683873b5c46f, type: 3}
-  skillDescription: 
-  cooldownTime: 1
+  skillDescription: "C\u1EAFm ki\u1EBFm xu\u1ED1ng m\u1EB7t \u0111\u1EA5t t\u1EA1o
+    ra m\u1ED9t d\u1EA3i b\u0103ng, g\xE2y s\xE1t th\u01B0\u01A1ng l\u1EDBn l\xEAn
+    k\u1EBB \u0111\u1ECBch ph\xEDa tr\u01B0\u1EDBc."
+  cooldownTime: 15
   damageMultiplier: 2
   duration: 0
-  range: 1
+  range: 2
   manaCost: 25
   vfxPrefab: {fileID: 3156866507962234106, guid: b83c2bc40405d62479de24874d7264c0, type: 3}
   spawnDelay: 0.3
-  sfxSound: {fileID: 0}
+  sfxSound: {fileID: 8300000, guid: df519ed8cb4fe0b4cb6c440b679dc55e, type: 3}

@@ -13,6 +13,10 @@ public class EnemyStats : MonoBehaviour, IDamageable
     [SerializeField]
     private GameObject vfxBloodHit;
 
+    [Header("Audio Settings")]
+    public AudioClip hurtSound;
+    private AudioSource audioSource;
+
     [Header("Status")]
     public bool isHurting = false;
 
@@ -22,18 +26,49 @@ public class EnemyStats : MonoBehaviour, IDamageable
     public event Action<float, float> OnHealthChanged;
 
     private Animator anim;
+    private EnemyBase enemyBase;
+    private UniqueID uniqueID;
+
 
     void Start()
     {
         currentHealth = maxHealth;
         anim = GetComponent<Animator>();
+        enemyBase = GetComponent<EnemyBase>();
+        uniqueID = GetComponent<UniqueID>();
+
+        if (uniqueID != null && !string.IsNullOrEmpty(uniqueID.uniqueId))
+        {
+            SaveData data = SaveSystem.Load();
+            if (data.destroyedObjects.Contains(uniqueID.uniqueId))
+            {
+                Destroy(gameObject);
+                return;
+            }
+        }
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null) audioSource = gameObject.AddComponent<AudioSource>();
+
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
-    public void TakeDamage(float damageAmount)
+    public void TakeDamage(float damageAmount, bool isCritical = false)
     {
-        currentHealth = Mathf.Max(0, currentHealth - damageAmount);
-        Debug.Log(transform.name + " has taken " + damageAmount + " damage!");
+        float finalDamage = damageAmount;
+
+        if (!isCritical && enemyBase != null)
+        {
+             float def = enemyBase.def;
+             def = Mathf.Max(0, def);
+             finalDamage = damageAmount * (100 / (100f + def));
+        }
+
+        currentHealth = Mathf.Max(0, currentHealth - finalDamage);
+        
+        string damageText = isCritical ? $"<color=red>CRIT! {finalDamage}</color>" : $"{finalDamage}";
+        Debug.Log($"{transform.name} received {damageText} damage!");
+
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
 
         if (!isHurting)
@@ -52,6 +87,12 @@ public class EnemyStats : MonoBehaviour, IDamageable
             );
             Destroy(vfxInstance, 1f);
         }
+
+        if (hurtSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(hurtSound);
+        }
+
         if (currentHealth <= 0)
         {
             Die();
@@ -70,6 +111,16 @@ public class EnemyStats : MonoBehaviour, IDamageable
     void Die()
     {
         Debug.Log(transform.name + " đã chết!");
+
+        if (uniqueID != null && !string.IsNullOrEmpty(uniqueID.uniqueId))
+        {
+            SaveData data = SaveSystem.Load();
+            if (!data.destroyedObjects.Contains(uniqueID.uniqueId))
+            {
+                data.destroyedObjects.Add(uniqueID.uniqueId);
+                SaveSystem.Save(data);
+            }
+        }
         
         if (lootTable != null)
         {

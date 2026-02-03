@@ -119,6 +119,58 @@ public class InventoryPlayer : MonoBehaviour
         inventory.Clear();
         equipment.Clear();
     }
+    public void UseItem(InventorySlot slot)
+    {
+        if (slot == null || slot.ItemObject == null) return;
+
+        ItemObject itemObj = slot.ItemObject;
+
+        if (itemObj.type == ItemType.Consumable && itemObj is ConsumableObject consumable)
+        {
+            if (consumable.restoreHealth > 0)
+            {
+                if (consumable.healDuration > 0)
+                {
+                    playerStats.HealOverTime(consumable.restoreHealth, consumable.healDuration);
+                }
+                else
+                {
+                    playerStats.Heal(consumable.restoreHealth);
+                }
+            }
+
+            if (consumable.restoreMana > 0)
+            {
+                playerStats.RestoreMana(consumable.restoreMana);
+            }
+
+            if (consumable.manaRegenMultiplier > 1f && consumable.manaBuffDuration > 0)
+            {
+                playerStats.BuffManaRegen(consumable.manaRegenMultiplier, consumable.manaBuffDuration);
+            }
+
+            if (consumable.permanentBuffs != null && consumable.permanentBuffs.Count > 0)
+            {
+                foreach (var buff in consumable.permanentBuffs)
+                {
+                    foreach (var attr in attributes)
+                    {
+                        if (attr.type == buff.attribute)
+                        {
+                            attr.value.BaseValue += buff.value;
+                            Debug.Log($"Đã tăng {buff.value} {buff.attribute} vĩnh viễn!");
+                        }
+                    }
+                }
+            }
+            
+            slot.AddAmount(-1);
+            if (slot.amount <= 0)
+            {
+                slot.RemoveItem();
+            }
+        }
+    }
 }
 
 [System.Serializable]
@@ -143,4 +195,9 @@ public class Attribute
     {
         parent.AttributeModified(this);
     }
+}
+
+public static class InterfaceExtension
+{
+    // Helper to check item usage
 }

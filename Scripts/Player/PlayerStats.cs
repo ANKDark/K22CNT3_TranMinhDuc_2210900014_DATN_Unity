@@ -23,7 +23,17 @@ public class PlayerStats : MonoBehaviour, IDamageable
     [Header("Status")]
     public bool isHurting = false;
     public float hitRecoveryTime = 0.5f;
-    [HideInInspector]
+
+    [Header("Regeneration")]
+    public float baseManaRegen = 1f;
+    private float currentManaMultiplier = 1f;
+
+    
+    [Header("Audio")]
+    public AudioClip hurtSound;
+    private AudioSource audioSource;
+
+    
     public bool isInvincible = false;
 
     [HideInInspector]
@@ -52,6 +62,9 @@ public class PlayerStats : MonoBehaviour, IDamageable
         currentHealth = maxHealth;
         currentMana = maxMana;
         currentStamina = maxStamina;
+        audioSource = GetComponentInChildren<AudioSource>();
+
+
     }
 
     void Update()
@@ -63,17 +76,25 @@ public class PlayerStats : MonoBehaviour, IDamageable
         RestoreStaminaOverTime();
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, bool isCritical = false)
     {
         if (isInvincible || isPlayerDead) return;
-        currentHealth = Mathf.Max(0, currentHealth - amount);
+        float def = inventoryPlayer.GetAttributeValue(Attributes.Defense);
+        def = Mathf.Max(0, def);
+        float finalDamage = amount * (100 / (100f + def));
+        currentHealth = Mathf.Max(0, currentHealth - finalDamage);
         OnHealthChanged?.Invoke(currentHealth, maxHealth);
         OnPlayerHit?.Invoke();
 
         if (currentHealth > 0)
         {
             StartCoroutine(HitRecoveryRoutine());
+            if (audioSource != null && hurtSound != null)
+            {
+                audioSource.PlayOneShot(hurtSound);
+            }
         }
+
 
         if (currentHealth <= 0)
         {
@@ -102,8 +123,47 @@ public class PlayerStats : MonoBehaviour, IDamageable
 
     public void RestoreManaOverTime()
     {
-        currentMana = Mathf.Min(maxMana, currentMana + 1f * Time.deltaTime);
+        float regenAmount = (baseManaRegen * currentManaMultiplier) * Time.deltaTime;
+        currentMana = Mathf.Min(maxMana, currentMana + regenAmount);
         OnManaChanged?.Invoke(currentMana, maxMana);
+    }
+
+    public void HealOverTime(float amount, float duration)
+    {
+        StartCoroutine(HealOverTimeRoutine(amount, duration));
+    }
+
+    private IEnumerator HealOverTimeRoutine(float amount, float duration)
+    {
+        float timer = 0f;
+        float startHealth = currentHealth;
+        // Logic: Add 'amount' over 'duration' seconds. 
+        // We will add per frame.
+        float rate = amount / duration;
+
+        while (timer < duration)
+        {
+            if (isPlayerDead) yield break;
+
+            float healTick = rate * Time.deltaTime;
+            Heal(healTick); 
+            timer += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    public void BuffManaRegen(float multiplier, float duration)
+    {
+        StartCoroutine(BuffManaRoutine(multiplier, duration));
+    }
+
+    private IEnumerator BuffManaRoutine(float multiplier, float duration)
+    {
+        currentManaMultiplier = multiplier;
+        Debug.Log($"<color=blue>Mana Regen x{multiplier} started!</color>");
+        yield return new WaitForSeconds(duration);
+        currentManaMultiplier = 1f;
+        Debug.Log($"<color=blue>Mana Regen ended.</color>");
     }
 
     public bool UseStamina(float amount)

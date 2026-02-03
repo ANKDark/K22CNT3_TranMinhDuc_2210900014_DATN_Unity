@@ -481,6 +481,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cb33a48699d642c99396b004ffbfbd1c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7713474119536653744}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cb33a48699d642c99396b004ffbfbd1c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 265843187149348858}
   m_SourcePrefab: {fileID: 100100000, guid: cb33a48699d642c99396b004ffbfbd1c, type: 3}
 --- !u!4 &943737350523432407 stripped
 Transform:
@@ -504,11 +507,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97bf4ebeb7bcfd46971388897c1e16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMage
-  damage: 10
-  attackCooldown: 2
-  chaseRange: 15
-  maxChaseRange: 20
-  attackRange: 8
+  damage: 15
+  def: 5
+  attackCooldown: 3.5
+  chaseRange: 7
+  maxChaseRange: 10
+  attackRange: 6
   runSpeed: 5
   turnSpeed: 5
   target: {fileID: 0}
@@ -558,9 +562,7 @@ MonoBehaviour:
   moveSpeed: 2
   waitTime: 2
   wanderRange: 7
-  patrolPoints:
-  - {fileID: 0}
-  - {fileID: 0}
+  patrolPoints: []
 --- !u!136 &853232304474614331
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -601,7 +603,7 @@ MonoBehaviour:
   healthBarUI: {fileID: 0}
   vfxBloodHit: {fileID: 5648043616069701104, guid: e2ba5115b4b778947bda814e83b9dc0c, type: 3}
   isHurting: 0
-  vfxTeleportation: {fileID: 3377181292992421420, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
+  vfxTeleportation: {fileID: 0}
   lootTable: {fileID: 11400000, guid: bb457cf1e4285dd42a3ab60a66e5344b, type: 2}
 --- !u!195 &7713474119536653744
 NavMeshAgent:
@@ -625,6 +627,19 @@ NavMeshAgent:
   m_BaseOffset: -0.1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &265843187149348858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568039518206017052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef573ee4178ecd4f89c32f66658addd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UniqueID
+  uniqueId: da09da48-3f11-4e65-a4d9-9fa56fb6d694
 --- !u!4 &2200319643493721254 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cb33a48699d642c99396b004ffbfbd1c, type: 3}

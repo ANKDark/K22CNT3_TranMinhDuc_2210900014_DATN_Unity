@@ -27,15 +27,26 @@ public class WeaponDamage : MonoBehaviour
         if (damageableTarget != null)
         {
             float finalDamage = baseDamage;
-
+            float critMultiplier = 2f;
             if (inventoryPlayer != null)
             {
                 int strength = inventoryPlayer.GetAttributeValue(Attributes.Strength);
-                finalDamage += strength;
+                int critical = inventoryPlayer.GetAttributeValue(Attributes.Critical);
 
-                Debug.Log($"Dame kiem: {baseDamage} + Sức mạnh: {strength * 2f} = Tổng dame: {finalDamage}");
+                bool isCritical = Random.Range(0f, 100f) < critical;
+
+                finalDamage += strength;
+                if (isCritical)
+                {
+                    finalDamage *= critMultiplier;
+                }
+                
+                damageableTarget.TakeDamage(finalDamage, isCritical);
             }
-            damageableTarget.TakeDamage(finalDamage);
+            else
+            {
+                damageableTarget.TakeDamage(finalDamage, false);
+            }
         }
     }
 

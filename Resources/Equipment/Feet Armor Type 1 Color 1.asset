@@ -12,22 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9596cf03ecc54d4e95218cc01d8cb95, type: 3}
   m_Name: Feet Armor Type 1 Color 1
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: 489b404bc5e57074fa35a6194db07703, type: 3}
+  uiDisplay: {fileID: 21300000, guid: a62f1523dcfdbd34b93139787535b2f0, type: 3}
   characterDisplay: {fileID: 8404540639860984710, guid: 0ff2b108fb236864190bf512830d3a73, type: 3}
   stackable: 0
   worldModel: {fileID: 8404540639860984710, guid: 0ff2b108fb236864190bf512830d3a73, type: 3}
   boneNames: []
   type: 3
-  description: 
   data:
-    name: 
+    name: "Qu\u1EA7n Canh Gi\u1EEF 1"
     Id: 3
     buffs:
-    - attribute: 1
-      value: 0
-      min: 1
-      max: 100
     - attribute: 3
       value: 0
       min: 1
-      max: 20
+      max: 3
+    - attribute: 2
+      value: 0
+      min: 3
+      max: 6
+    description: "B\xEAn trong l\u1EDBp th\xE9p l\xE0 \u0111\xF4i ch\xE2n ch\u01B0a
+      t\u1EEBng quay \u0111\u1EA7u.\nD\xF9 con \u0111\u01B0\u1EDDng ph\xEDa sau \u0111\xE3
+      bi\u1EBFn m\u1EA5t t\u1EEB l\xE2u."

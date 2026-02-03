@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9596cf03ecc54d4e95218cc01d8cb95, type: 3}
   m_Name: Arm Armor Type 5 Color 1
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: 594dfead5e79f034cb71930b3e998caa, type: 3}
+  uiDisplay: {fileID: 21300000, guid: a969f20834ef4a442b9302988398d98a, type: 3}
   characterDisplay: {fileID: 4666746494308658448, guid: 626e2c6213aed9649a368d1a0378dc7a, type: 3}
-  stackable: 1
+  stackable: 0
   worldModel: {fileID: 4666746494308658448, guid: 626e2c6213aed9649a368d1a0378dc7a, type: 3}
   boneNames: []
   type: 0
-  description: 
   data:
     name: 
     Id: 0

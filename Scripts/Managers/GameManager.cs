@@ -47,19 +47,18 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("HasStarted", 1);
         playerPosition = new Vector3(-10.41003f, 0.074f, -14.05812f);
 
-        currentScene = "SampleScene";
+        currentScene = "IntroScene";
         PlayerPrefs.SetString("CurrentScene", currentScene);
         PlayerPrefs.SetFloat("px", playerPosition.x);
         PlayerPrefs.SetFloat("py", playerPosition.y);
         PlayerPrefs.SetFloat("pz", playerPosition.z);
         PlayerPrefs.SetInt("IsNewGame", 1);
         PlayerPrefs.SetInt("HasSaveGame", 1);
+        PlayerPrefs.DeleteKey("PlayerHealth");
+        PlayerPrefs.DeleteKey("PlayerMana");
         PlayerPrefs.Save();
 
-        SaveData saveData = SaveSystem.Load();
-        saveData.collectedItems.Clear();
-        saveData.destroyedObjects.Clear();
-        SaveSystem.Save(saveData);
+        SaveSystem.DeleteAllSaves();
 
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(currentScene);
@@ -96,8 +95,15 @@ public class GameManager : MonoBehaviour
 
     public void BackToMenu()
     {
+        SaveGame();
+        if (autoSaveCoroutine != null) StopCoroutine(autoSaveCoroutine);
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void SaveGame()
+    {
         InventoryPlayer invManager = FindFirstObjectByType<InventoryPlayer>();
-        ChestInteractable chestManager = FindFirstObjectByType<ChestInteractable>();
+        ChestInteractable[] chests = FindObjectsByType<ChestInteractable>(FindObjectsSortMode.None);
 
         if (invManager != null)
         {
@@ -105,17 +111,46 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetFloat("px", playerPosition.x);
             PlayerPrefs.SetFloat("py", playerPosition.y);
             PlayerPrefs.SetFloat("pz", playerPosition.z);
+            
+            currentScene = SceneManager.GetActiveScene().name;
+            PlayerPrefs.SetString("CurrentScene", currentScene);
 
-            invManager.inventory.Save();
-            invManager.equipment.Save();
-            if (chestManager != null && chestManager.chestData != null)
-                chestManager.chestData.Save();
+            if (invManager.inventory != null) invManager.inventory.Save();
+            if (invManager.equipment != null) invManager.equipment.Save();
+            
+            PlayerStats stats = invManager.GetComponent<PlayerStats>();
+            if (stats != null)
+            {
+                PlayerPrefs.SetFloat("PlayerHealth", stats.currentHealth);
+                PlayerPrefs.SetFloat("PlayerMana", stats.currentMana);
+            }
+        }
+
+        foreach (var chest in chests)
+        {
+            if (chest.chestData != null) chest.chestData.Save();
         }
 
         PlayerPrefs.SetInt("HasSaveGame", 1);
         PlayerPrefs.Save();
+    }
 
-        SceneManager.LoadScene("MainMenu");
+    private Coroutine autoSaveCoroutine;
+
+    public void StartAutoSave()
+    {
+        if (autoSaveCoroutine != null) StopCoroutine(autoSaveCoroutine);
+        autoSaveCoroutine = StartCoroutine(AutoSaveRoutine());
+    }
+
+    private System.Collections.IEnumerator AutoSaveRoutine()
+    {
+        WaitForSeconds wait = new WaitForSeconds(30f);
+        while (true)
+        {
+            yield return wait;
+            SaveGame();
+        }
     }
 
     public void LoadNextScene(string sceneName)
@@ -123,7 +158,7 @@ public class GameManager : MonoBehaviour
         isTeleporting = true;
 
         currentScene = sceneName;
-    PlayerPrefs.SetString("CurrentScene", sceneName);
+        PlayerPrefs.SetString("CurrentScene", sceneName);
         SceneManager.sceneLoaded += OnSceneLoaded;
         SceneManager.LoadScene(sceneName);
     }
@@ -136,7 +171,10 @@ public class GameManager : MonoBehaviour
         {
             if (!isTeleporting)
             {
+                CharacterController cc = invManager.GetComponent<CharacterController>();
+                if (cc != null) cc.enabled = false;
                 invManager.transform.position = playerPosition;
+                if (cc != null) cc.enabled = true;
             }
             isTeleporting = false;
 
@@ -179,11 +217,7 @@ public class GameManager : MonoBehaviour
                     saveData.destroyedObjects.Clear();
                     SaveSystem.Save(saveData);
 
-                    ChestInteractable chestManager = FindFirstObjectByType<ChestInteractable>();
-                    if (chestManager != null && chestManager.chestData != null)
-                    {
-                        chestManager.chestData.Save();
-                    }
+
                 }
                 else
                 {
@@ -192,6 +226,19 @@ public class GameManager : MonoBehaviour
 
                     if (invManager.equipment != null)
                         invManager.equipment.Load();
+
+                    PlayerStats stats = invManager.GetComponent<PlayerStats>();
+                    if (stats != null)
+                    {
+                        if (PlayerPrefs.HasKey("PlayerHealth"))
+                            stats.currentHealth = PlayerPrefs.GetFloat("PlayerHealth");
+                        
+                        if (PlayerPrefs.HasKey("PlayerMana"))
+                            stats.currentMana = PlayerPrefs.GetFloat("PlayerMana");
+                        
+                        stats.Heal(0); 
+                        stats.RestoreMana(0);
+                    }
                 }
                 CreateCheckpoint(invManager);
             }
@@ -201,6 +248,8 @@ public class GameManager : MonoBehaviour
             {
                 visuals.RestoreEquippedItems();
             }
+
+            StartAutoSave();
         }
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
@@ -214,5 +263,12 @@ public class GameManager : MonoBehaviour
             equipmentSnapshot = JsonUtility.ToJson(invManager.equipment);
 
         playerPosition = invManager.transform.position;
+
+        PlayerPrefs.SetFloat("px", playerPosition.x);
+        PlayerPrefs.SetFloat("py", playerPosition.y);
+        PlayerPrefs.SetFloat("pz", playerPosition.z);
+        currentScene = SceneManager.GetActiveScene().name;
+        PlayerPrefs.SetString("CurrentScene", currentScene);
+        PlayerPrefs.Save();
     }
 }

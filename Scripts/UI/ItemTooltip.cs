@@ -10,7 +10,7 @@ public class ItemTooltip : MonoBehaviour
     public TMP_Text txt_name, txt_buff, txt_description;
     public CanvasGroup canvasGroup;
     bool isShowing;
-    void Start()
+    void Awake()
     {
         instance = this;
         isShowing = false;

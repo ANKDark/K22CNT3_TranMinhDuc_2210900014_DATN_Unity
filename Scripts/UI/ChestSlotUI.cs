@@ -10,7 +10,6 @@ public class ChestSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public TextMeshProUGUI amountText;
     [HideInInspector] public InventorySlot slotData;
     private ChestUI parentUI;
-
     public void Init(InventorySlot _slot, ChestUI _parent)
     {
         slotData = _slot;

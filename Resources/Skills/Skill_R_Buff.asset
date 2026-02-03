@@ -15,11 +15,11 @@ MonoBehaviour:
   skillName: "Th\u1EA7n L\u1EF1c"
   skillIcon: {fileID: 21300000, guid: f1f82d6e1784fcf4bbe8ccd92ca3639c, type: 3}
   skillDescription: 
-  cooldownTime: 20
+  cooldownTime: 30
   damageMultiplier: 1
   duration: 10
   range: 0
   manaCost: 50
   vfxPrefab: {fileID: 7155335147208632822, guid: 97c43495f80a3244fad1301dfafbe252, type: 3}
   spawnDelay: 1
-  sfxSound: {fileID: 0}
+  sfxSound: {fileID: 8300000, guid: 05150a6a3e1e8884d950e183e5edc73f, type: 3}

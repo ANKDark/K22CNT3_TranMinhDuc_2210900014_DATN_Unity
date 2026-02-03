@@ -45,16 +45,16 @@ public class UIStatsPanel : MonoBehaviour
             switch (attr.type)
             {
                 case Attributes.Strength:
-                    strengthText.text = $"Strength: {attr.value.ModifiedValue}";
+                    strengthText.text = $"Sức mạnh: {attr.value.ModifiedValue}";
                     break;
-                case Attributes.Agility:
-                    agilityText.text = $"Agility: {attr.value.ModifiedValue}";
+                case Attributes.Critical:
+                    agilityText.text = $"Chí mạng: {attr.value.ModifiedValue}";
                     break;
-                case Attributes.Intellect:
-                    intellectText.text = $"Intellect: {attr.value.ModifiedValue}";
+                case Attributes.Defense:
+                    intellectText.text = $"Phòng thủ: {attr.value.ModifiedValue}";
                     break;
                 case Attributes.Stamina:
-                    staminaText.text = $"Stamina: {attr.value.ModifiedValue}";
+                    staminaText.text = $"Thể lực: {attr.value.ModifiedValue}";
                     break;
             }
         }

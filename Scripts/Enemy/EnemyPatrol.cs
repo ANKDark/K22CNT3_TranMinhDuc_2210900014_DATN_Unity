@@ -25,8 +25,19 @@ public class EnemyPatrol : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+
+        agent.avoidancePriority = Random.Range(30, 70);
+
+        agent.stoppingDistance = 0.1f;
+        agent.autoBraking = false;
+
         startPosition = transform.position;
         waitCounter = waitTime;
+
+        if (usePatrolPoints && patrolPoints.Length > 0)
+        {
+            agent.SetDestination(patrolPoints[currentPatrolIndex].position);
+        }
     }
 
     public void DoPatrolLogic()
@@ -43,16 +54,24 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
+    bool ReachedDestination()
+    {
+        return !agent.pathPending &&
+               agent.remainingDistance <= agent.stoppingDistance &&
+               (!agent.hasPath || agent.velocity.sqrMagnitude < 0.01f);
+    }
+
     void MoveToWaypoint()
     {
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        if (ReachedDestination())
         {
             if (waitCounter > 0)
             {
                 waitCounter -= Time.deltaTime;
                 isWaiting = true;
-                
-                if (anim != null) anim.SetFloat("Speed", 0f);
+
+                if (anim != null)
+                    anim.SetFloat("Speed", 0f);
             }
             else
             {
@@ -70,14 +89,15 @@ public class EnemyPatrol : MonoBehaviour
 
     void WanderAround()
     {
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        if (ReachedDestination())
         {
             if (waitCounter > 0)
             {
                 waitCounter -= Time.deltaTime;
                 isWaiting = true;
-                
-                if (anim != null) anim.SetFloat("Speed", 0f);
+
+                if (anim != null)
+                    anim.SetFloat("Speed", 0f);
             }
             else
             {
@@ -95,11 +115,13 @@ public class EnemyPatrol : MonoBehaviour
         {
             Vector3 randomPoint = center + Random.insideUnitSphere * range;
             NavMeshHit hit;
+
             if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
             {
                 return hit.position;
             }
         }
+
         return center;
     }
 
@@ -112,7 +134,9 @@ public class EnemyPatrol : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        if (!usePatrolPoints)
-            Gizmos.DrawWireSphere(Application.isPlaying ? startPosition : transform.position, wanderRange);
+        Gizmos.DrawWireSphere(
+            Application.isPlaying ? startPosition : transform.position,
+            wanderRange
+        );
     }
 }

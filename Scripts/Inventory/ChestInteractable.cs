@@ -34,13 +34,31 @@ public class ChestInteractable : MonoBehaviour
     private Quaternion closedRot;
     private Quaternion openRot;
 
+    [Header("Lock Settings")]
+    public GameObject enemyCheck;
+    private Collider myCollider;
+
     void Awake()
     {
+        myCollider = GetComponent<Collider>();
         if (chestData != null)
         {
             chestData = Instantiate(chestData);
         }
         inputActions = new InputSystem_Actions();
+        GenerateUniqueSavePath();
+    }
+
+    private void GenerateUniqueSavePath()
+    {
+        if (chestData == null || string.IsNullOrEmpty(chestData.savePath)) return;
+
+        string extension = System.IO.Path.GetExtension(chestData.savePath);
+        string basePath = chestData.savePath.Substring(0, chestData.savePath.Length - extension.Length);
+
+        string posID = $"{Mathf.RoundToInt(transform.position.x * 100)}_{Mathf.RoundToInt(transform.position.y * 100)}_{Mathf.RoundToInt(transform.position.z * 100)}";
+
+        chestData.savePath = $"{basePath}_{posID}{extension}";
     }
 
     void Start()
@@ -70,6 +88,10 @@ public class ChestInteractable : MonoBehaviour
         {
             chestData.Load();
         }
+        else if (chestData != null)
+        {
+            chestData.InitializeBuffs();
+        }
 
         CheckIfEmptyAndDestroy();
     }
@@ -90,6 +112,15 @@ public class ChestInteractable : MonoBehaviour
 
     void Update()
     {
+        if (enemyCheck != null)
+        {
+            if (myCollider.enabled) myCollider.enabled = false;
+        }
+        else if (!isDestroying && !myCollider.enabled)
+        {
+            myCollider.enabled = true;
+        }
+
         if (lidObject != null)
         {
             Quaternion target = isOpen ? openRot : closedRot;
@@ -152,10 +183,7 @@ public class ChestInteractable : MonoBehaviour
                     pressFPopup.SetActive(false);
             }
         }
-        else if (pressFPopup != null && pressFPopup.activeSelf)
-        {
-            pressFPopup.SetActive(false);
-        }
+
     }
 
     void OnTriggerEnter(Collider other)
@@ -189,6 +217,7 @@ public class ChestInteractable : MonoBehaviour
 
         if (chestData.IsEmpty())
         {
+            chestData.Save();
             isDestroying = true;
 
             if (pressFPopup != null)

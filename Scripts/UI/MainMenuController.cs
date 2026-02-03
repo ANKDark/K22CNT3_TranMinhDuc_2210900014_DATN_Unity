@@ -26,8 +26,17 @@ public class MainMenuController : MonoBehaviour
         GameManager.Instance.ContinueGame();
     }
 
+    public void OpenGuideWebsite()
+    {
+        Application.OpenURL("http://darkdungeon.ankdark.id.vn/guide");
+    }
+
     public void QuitGame()
     {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 }

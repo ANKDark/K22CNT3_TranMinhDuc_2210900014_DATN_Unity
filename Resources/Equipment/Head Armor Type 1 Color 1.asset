@@ -12,22 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9596cf03ecc54d4e95218cc01d8cb95, type: 3}
   m_Name: Head Armor Type 1 Color 1
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: 26f5264360368854eae1764927bf8ce5, type: 3}
+  uiDisplay: {fileID: 21300000, guid: fa709725529d0e44d91b4c117871eaed, type: 3}
   characterDisplay: {fileID: 4506212837237186832, guid: c58a0f3d265344c438e99a7d3139dd17, type: 3}
   stackable: 0
   worldModel: {fileID: 4506212837237186832, guid: c58a0f3d265344c438e99a7d3139dd17, type: 3}
   boneNames: []
   type: 4
-  description: 
   data:
-    name: 
+    name: "M\u0169 Canh Gi\u1EEF 1"
     Id: 4
     buffs:
     - attribute: 2
       value: 0
-      min: 1
-      max: 100
+      min: 3
+      max: 6
     - attribute: 1
       value: 0
       min: 1
-      max: 20
+      max: 3
+    description: "Chi\u1EBFc m\u0169 n\xE0y t\u1EEBng che \u0111i \xE1nh m\u1EAFt
+      c\u1EE7a m\u1ED9t hi\u1EC7p s\u0129 kh\xF4ng \u0111\u01B0\u1EE3c ph\xE9p r\u1EDDi
+      v\u1ECB tr\xED.\nB\xEAn trong v\u1EABn c\xF2n v\u1EBFt n\u1EE9t \u2013 n\u01A1i
+      h\u1EAFn \u0111\xE3 nh\xECn th\u1EA5y th\u1EE9 kh\xF4ng n\xEAn t\u1ED3n t\u1EA1i."
